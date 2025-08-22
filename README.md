@@ -12,7 +12,7 @@ Skript pro stažení výsledků voleb z [volby.cz](https://www.volby.cz) a jejic
 git clone <adresa-repozitare>
 cd projekt-volebni-scraper
 
-# Instalace závislostí
+# Instalace knihoven
 pip install -r requirements.txt
 
 Soubor requirements.txt obsahuje:
@@ -23,7 +23,7 @@ Spuštění skriptu
 python main.py <URL> <soubor.csv>
 
 Parametry
-URL – odkaz na okres z webu volby.cz (např. Prostějov, Brno-město, …)
+URL – odkaz na okres z webu volby.cz
 soubor.csv – název výstupního CSV souboru
 
 Příklad použití
