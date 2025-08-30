@@ -11,8 +11,10 @@ import csv
 import sys
 import time
 
+
 #základní adresa webu
 BASE_URL = "https://www.volby.cz/pls/ps2017nss/"
+
 
 #najde odkazy na obce z úvodní stránky okresu
 def get_municipality_links(url):
@@ -20,6 +22,7 @@ def get_municipality_links(url):
     soup = BeautifulSoup(response.text, "html.parser")
     # vrací dvojice (kód obce, odkaz na obec)
     return [(a.text.strip(), BASE_URL + a["href"]) for a in soup.select(".cislo a")]
+
 
 #z detailu obce vytáhne název obce
 def extract_location_name(soup):
@@ -30,12 +33,14 @@ def extract_location_name(soup):
             return text.replace("Obec:", "").strip()
     return "NO VILLAGE FOUND"
 
+
 #z detailu obce vytáhne počty voličů, obálek a platných hlasů
 def extract_main_numbers(soup):
     voters = soup.select_one('td[headers="sa2"]').text.strip()
     envelopes = soup.select_one('td[headers="sa3"]').text.strip()
     valid_votes = soup.select_one('td[headers="sa6"]').text.strip()
     return voters, envelopes, valid_votes
+
 
 #z detailu obce vytáhne hlasy pro jednotlivé strany
 def extract_party_votes(soup):
@@ -63,6 +68,7 @@ def extract_party_votes(soup):
 
     return result, order
 
+
 #stáhne a zpracuje data pro konkrétní obec
 def parse_municipality_data(code, link):
     page = requests.get(link)
@@ -83,6 +89,7 @@ def parse_municipality_data(code, link):
     row.update(party_votes)  #přidání hlasů pro strany
     return row, parties
 
+
 #uloží výsledky do CSV souboru
 def save_to_csv(data_list, parties_order, output_filename):
     with open(output_filename, mode="w", newline="", encoding="windows-1250") as file:
@@ -91,6 +98,7 @@ def save_to_csv(data_list, parties_order, output_filename):
         writer.writeheader()
         for row in data_list:
             writer.writerow(row)
+
 
 #hlavní funkce pro stažení a uložení výsledků
 def get_url(url, output_filename):
@@ -118,6 +126,7 @@ def get_url(url, output_filename):
     print(f'DATA SUCCESSFULLY DOWNLOADED AND SAVED TO \"{output_filename}\"')
     print(f"DOWNLOAD TOOK {round(end_time - start_time, 2)} SECONDS")
     print("CLOSING main.py")
+
 
 #spuštění programu z příkazové řádky
 if __name__ == "__main__":
