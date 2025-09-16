@@ -93,7 +93,7 @@ def parse_municipality_data(code, link):
 #uloží výsledky do CSV souboru
 def save_to_csv(data_list, parties_order, output_filename):
     with open(output_filename, mode="w", newline="", encoding="windows-1250") as file:
-        fieldnames = ["code", "location", "registred", "envelopes", "valid"] + parties_order
+        fieldnames = ["code", "location", "registered", "envelopes", "valid"] + parties_order
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
         for row in data_list:
